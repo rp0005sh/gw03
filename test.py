@@ -4,6 +4,9 @@ import pyaudio
 import numpy as np
 import matplotlib.pyplot as plt
 
+import RPi.GPIO as GPIO
+import time
+
 
 CHUNK = 1024
 RATE = 44100
@@ -20,7 +23,14 @@ stream.stop_stream()
 stream.close()
 P.terminate()
 
-a=b''.join(a)
+a = b''.join(a)
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(15, GPIO.OUT)
+GPIO.output(15, GPIO.HIGH)
+time.sleep(1)
+GPIO.output(15, GPIO.LOW)
+
 
 x = np.frombuffer(a,dtype="int16") / 32768.0
 plt.figure(figsize=(15,3))
